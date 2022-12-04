@@ -8,12 +8,24 @@ object RucksackReorganiser {
     lines
   }
 
-  def mostImportantItemTotaller(rucksacks_input: String): Int = {
-    val allRucksacks = rucksacks_input.split("\n")
+  def mostImportantItemTotaller(rucksacksInput: String): Int = {
+    val allRucksacks = rucksacksInput.split("\n")
     allRucksacks.map {
       rucksack =>
         val commonItem = findCommonItem(rucksack)
         findItemPriorityValue(commonItem)
+    }.sum
+  }
+
+  def getElfGroupPriorities(inputData: String): Int = {
+    val allElves = inputData.split("\n")
+    val groupedElves: Array[Array[String]] = allElves.grouped(3).toArray
+    groupedElves.map {
+      group: Array[String] =>
+        val common1 = group(0) intersect group(1)
+        val common2 = common1 intersect group(2)
+        val commonItemInGroup = common2.distinct
+        findItemPriorityValue(commonItemInGroup)
     }.sum
   }
 
